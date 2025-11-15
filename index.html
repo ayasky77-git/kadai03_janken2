@@ -121,10 +121,10 @@
 
             $("#result").text(name_ary[Atari].value + "さん" + theme + "よろしくお願いします！");
 
-                    // Atari2 = Atari + 1;
-                    // kuji_class = ".kuji"+ Atari2;
-                    // console.log(kuji_class);
-                    // $(kuji_class).attr('src','./images/kuji_atari.png');
+            // Atari2 = Atari + 1;
+            // kuji_class = ".kuji"+ Atari2;
+            // console.log(kuji_class);
+            // $(kuji_class).attr('src','./images/kuji_atari.png');
                 
             // あたりハズレに応じて画像を変換表示
             for(let i=0; i<=maxParticipant; i++){
@@ -132,21 +132,14 @@
                     Atari2 = i + 1;
                     kuji_class = ".kuji"+ Atari2;
                     console.log(kuji_class);
-                    // let Atari2 = Atari + 1;
-                    // kuji_class = ".kuji"+ Atari;
-                    // console.log(kuji_class);
                     $(kuji_class).attr('src','./images/kuji_atari.png');
                 }else{
                     Atari2 = i + 1;
                     kuji_class = ".kuji"+ Atari2;
                     console.log(kuji_class);
-                    // Atari2 = Atari + 1;
-                    // kuji_class = ".kuji"+ Atari;
-                    // console.log(kuji_class);
                     $(kuji_class).attr('src','./images/kuji_hazure.png');
                 }
             }
-
             
             // // 選んだ番号を表示_===だと動かない、choicesが文字だから
             // if(choices==1){
