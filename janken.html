@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>じゃんけん</title>
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
+  <link rel="stylesheet" href="css/janken.css">
+</head>
+
+<body>
+  <main>
+
+    <section>
+      <h1>じゃんけん</h1>
+    </section>
+
+    <section>
+      <p>コンピュータの手は？？</p>
+      <p id="computer"></p>
+    </section>
+
+    <section>
+      <p>勝敗は？？</p>
+      <p id="VS"></p>
+    </section>
+
+    <div id="button">
+      <button id="goo">グー</button>
+      <button id="choki">チョキ</button>
+      <button id="pa-">パー</button>
+    </div>
+
+  </main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+// グーの場合_競合の手をランダム関数で決める
+$("#goo").on("click",function(){
+  // ランダムな数を作る
+  const computer=Math.floor(Math.random()*3);
+
+  // 0グー、1チョキ、2パーと定義し、テキスト表示
+  if(computer===0){
+    $("#computer").text('グー');
+  }else if(computer===1){
+    $("#computer").text('チョキ'); 
+  }else{
+    $("#computer").text('パー');
+  }
+
+  // 勝敗を表示
+  if(computer===0){
+    $("#VS").text("あいこ")
+  }else if(computer===1){
+    $("#VS").text("勝ち")
+  }else{
+    $("#VS").text("負け")
+  }
+})
+
+// チョキの場合_競合の手をランダム関数で決める
+$("#choki").on("click",function(){
+  // ランダムな数を作る
+  const computer=Math.floor(Math.random()*3);
+
+  // 0グー、1チョキ、2パーと定義し、テキスト表示
+  if(computer===0){
+    $("#computer").text('グー');
+  }else if(computer===1){
+    $("#computer").text('チョキ'); 
+  }else{
+    $("#computer").text('パー');
+  }
+
+  // 勝敗を表示
+  if(computer===0){
+    $("#VS").text("負け")
+  }else if(computer===1){
+    $("#VS").text("あいこ")
+  }else{
+    $("#VS").text("勝ち")
+  }
+})
+
+// パーの場合_競合の手をランダム関数で決める
+$("#pa-").on("click",function(){
+  // ランダムな数を作る
+  const computer=Math.floor(Math.random()*3);
+
+  // 0グー、1チョキ、2パーと定義し、テキスト表示
+  if(computer===0){
+    $("#computer").text('グー');
+  }else if(computer===1){
+    $("#computer").text('チョキ'); 
+  }else{
+    $("#computer").text('パー');
+  }
+
+  // 勝敗を表示
+  if(computer===0){
+    $("#VS").text("勝ち")
+  }else if(computer===1){
+    $("#VS").text("負け")
+  }else{
+    $("#VS").text("あいこ")
+  }
+})
+
+</script>
+</body>
+
+</html>

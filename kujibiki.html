@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>くじ引き</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/kujibiki.css">
+</head>
+<body>
+    <main>
+        <img class="banner" src="./images/main.png" alt="メインバナー">
+
+        <div class="ready">
+            <h2>準備</h2>
+
+            <section>
+                <p class="title">Step1. テーマを入力</p>
+                <p class="ex">入力例）掃除当番、飲み会幹事</p>
+                <div class="settei">
+                    <input type="text" id="theme" val=""/>
+                    <p class="sub_text">を決める
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <p class="title">Step2. 参加人数を選択</p>
+                <select id="participant">
+                    <option value="" disabled selected>--選択してください--</option>
+                    <option value="2">2人</option>
+                    <option value="3">3人</option>
+                    <option value="4">4人</option>
+                    <option value="5">5人</option>
+                </select>
+            </section>
+
+            <section>
+                <p class="title">Step3. 当たる人数を選択</p>
+                <select id="winner">
+                    <option value="" disabled selected>--選択してください--</option>
+                </select>
+            </section>
+        </div>
+        
+        <div class="kujibiki">
+            <h2>くじ引き会場</h2>
+
+            <section>
+                <div class="entername">
+                </div>
+            </section>
+
+            <section>
+                <button id="run">抽選する</button>
+            </section>
+
+            <section>
+                <p>結果は？</p>
+                <p id="result"></p>
+            </section>
+
+            <section>
+                <button id="reset">もう1回やる</button>
+            </section>
+        </div>
+        
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+        // 定義
+        let theme=""
+        let participant = 0;
+        let maxParticipant = 0;
+        const name_ary=[];  //配列を定義
+
+        // 入力欄に何か入力されたら発動
+        $("#theme").on('change',function(){ 
+            theme = $( this ).val();
+        });
+
+        // 参加人数の値を取得
+        $("#participant").on('change',function(){ 
+            participant = $( this ).val();
+            maxParticipant = parseInt(participant);
+
+            // 当たる人数の選択肢をリセット
+            $("#winner").empty();
+            $("#winner").append('<option value="" disabled selected>--選択してください--</option>');
+
+            // 当たる人数の上限値分の選択肢をhtml内に設定
+            for(let i=1; i<maxParticipant; i++){
+                $("#winner").append('<option value="'+i+'">'+i+'人</option>');
+            }
+
+            // 選ぶ枠をリセット
+            $(".entername").empty();
+
+            // 当たる人数分の選ぶ枠をhtml内に設定、画像をランダムに表示
+            for(let i=1; i<=maxParticipant; i++){
+                const random_img = Math.floor(Math.random()*5) + 1;
+                $(".entername").append('<div class="row_choices"> <img src="./images/kuji'+random_img+'.png" id="kuji" class="kuji'+i+'" alt="くじ"> <input type="text" class="name_ary" placeholder="名前を入力してください" name="name" value=""> </div>');
+            }
+        });
+
+        // 「抽選する」ボタンが押されたら発動
+        $("#run").on("click",function(){
+
+            // 配列に値を入れる
+            let name_ary = $(".name_ary").serializeArray();
+
+            // ランダムに当たりNo.を決める
+            const min = 0;
+            const max = maxParticipant - 1; //配列に合わせるため1引く
+
+            const Atari = Math.floor(Math.random() * (max - min + 1) + min);
+            console.log("当たり:"+Atari);
+            console.log("あたり名前"+name_ary[Atari].value);
+
+            $("#result").text(name_ary[Atari].value + "さん" + theme + "よろしくお願いします！");
+
+                    // Atari2 = Atari + 1;
+                    // kuji_class = ".kuji"+ Atari2;
+                    // console.log(kuji_class);
+                    // $(kuji_class).attr('src','./images/kuji_atari.png');
+                
+            // あたりハズレに応じて画像を変換表示
+            for(let i=0; i<=maxParticipant; i++){
+                if(Atari==i){
+                    Atari2 = i + 1;
+                    kuji_class = ".kuji"+ Atari2;
+                    console.log(kuji_class);
+                    // let Atari2 = Atari + 1;
+                    // kuji_class = ".kuji"+ Atari;
+                    // console.log(kuji_class);
+                    $(kuji_class).attr('src','./images/kuji_atari.png');
+                }else{
+                    Atari2 = i + 1;
+                    kuji_class = ".kuji"+ Atari2;
+                    console.log(kuji_class);
+                    // Atari2 = Atari + 1;
+                    // kuji_class = ".kuji"+ Atari;
+                    // console.log(kuji_class);
+                    $(kuji_class).attr('src','./images/kuji_hazure.png');
+                }
+            }
+
+            
+            // // 選んだ番号を表示_===だと動かない、choicesが文字だから
+            // if(choices==1){
+            //     $("#choices").text("1番")
+            // }else if(choices==2){
+            //     $("#choices").text("2番")
+            // }else if(choices==3){
+            //     $("#choices").text("3番")
+            // }else if(choices==4){
+            //     $("#choices").text("4番")
+            // }else{
+            //     $("#choices").text("5番")
+            // }
+
+            // // 当たりかハズレかを判断
+            // if(choices==Atari){
+            //     $("#result").text("当たり")
+            // }else{
+            //     $("#result").text("ハズレ")
+            // }
+        });
+        
+        $("#reset").on("click",function(){
+            location.reload();
+        });
+
+    </script>
+</body>
+</html>

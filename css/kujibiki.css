@@ -1,0 +1,108 @@
+body{
+    background-color: #FAF6E5;
+
+}
+
+main {
+    max-width: 480px;
+    /* height: 100vh; */
+    margin: 0 auto;
+}
+
+.banner{
+    height: 190px;
+    margin: 0 auto;
+}
+
+.ready{
+    margin-bottom: 50px;
+}
+
+h2{
+    color: #DA3B3C;
+    text-align: center;
+    margin: 20px 0px;
+}
+
+section {
+    margin-bottom: 20px;
+    /* height: calc(100vh/6); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    font-size: 16px;
+    font-weight: 800;
+    /* color: #DA3B3C; */
+    color: #3D93B3;
+    line-height: 0px;
+}
+
+.ex{
+    font-size: 12px;
+    line-height: 0px;
+}
+
+.settei {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#theme{
+    width:180px;
+    height: 25px;
+    margin-top: 10px;
+}
+
+.sub_text{
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+#participant,#winner{
+    width:180px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.entername {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#run,#reset{
+    width: 40%;
+    height: 30px;
+    margin: 20px 0px;
+    background-color: #3D93B3;
+    font-size: 14px;
+    color: #FAF6E5;
+    border: none;
+
+}
+
+.row_choices{
+    width: 70%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+#kuji{
+    width: 50%;
+}
+
+.name_ary{
+    width:150px;
+    height: 30px;
+    margin: 10px 0px;
+}
