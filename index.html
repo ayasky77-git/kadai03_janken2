@@ -74,8 +74,9 @@
         let theme=""
         let participant = 0;
         let maxParticipant = 0;
+        let maxAtari =0;
         const name_ary=[];  //配列を定義
-
+        
         // 入力欄に何か入力されたら発動
         $("#theme").on('change',function(){ 
             theme = $( this ).val();
@@ -105,61 +106,58 @@
             }
         });
 
+        // 当選人数の値を取得
+        $("#winner").on('change',function(){ 
+        atari_num = $( this ).val();
+        maxAtari = parseInt(atari_num);
+        console.log("当たり人数"+maxAtari);
+        });
+
+        // 複数人の当選者を決めるランダム関数の定義
+        function random(array, num) {
+        var a = array;
+        var t = [];
+        var r = [];
+        var l = a.length;
+        var n = num < l ? num : l;
+        while (n-- > 0) {
+        var i = (Math.random() * l) | 0;
+        r[n] = t[i] || a[i];
+        --l;
+        t[i] = t[l] || a[l];
+        }
+        return r;
+        }    
+        
         // 「抽選する」ボタンが押されたら発動
         $("#run").on("click",function(){
 
-            // 配列に値を入れる
+            // 配列に入力された値を入れる
             let name_ary = $(".name_ary").serializeArray();
+            
+            // 事前に定義したrandom関数で当たり配列を作る
+            let winner_list = random(name_ary, maxAtari);
+ 
+            // 当選者の名前を抽出して、整形された文字列を作成する
+            let winner_names = winner_list.map(function(item) {
+                return item.value;
+            });
 
-            // ランダムに当たりNo.を決める
-            const min = 0;
-            const max = maxParticipant - 1; //配列に合わせるため1引く
-
-            const Atari = Math.floor(Math.random() * (max - min + 1) + min);
-            console.log("当たり:"+Atari);
-            console.log("あたり名前"+name_ary[Atari].value);
-
-            $("#result").text(name_ary[Atari].value + "さん" + theme + "よろしくお願いします！");
-
-            // Atari2 = Atari + 1;
-            // kuji_class = ".kuji"+ Atari2;
-            // console.log(kuji_class);
-            // $(kuji_class).attr('src','./images/kuji_atari.png');
+            // 結果を表示
+            $("#result").text(winner_names.join("、") + "さん" + theme + "よろしくお願いします！");
                 
             // あたりハズレに応じて画像を変換表示
-            for(let i=0; i<=maxParticipant; i++){
-                if(Atari==i){
-                    Atari2 = i + 1;
-                    kuji_class = ".kuji"+ Atari2;
-                    console.log(kuji_class);
+            for(let i=0; i<name_ary.length; i++){
+                const participant_name = name_ary[i].value;
+                const Atari_num = i+1;
+                const kuji_class = ".kuji"+ Atari_num;
+
+                if(winner_names.includes(participant_name)){                    
                     $(kuji_class).attr('src','./images/kuji_atari.png');
                 }else{
-                    Atari2 = i + 1;
-                    kuji_class = ".kuji"+ Atari2;
-                    console.log(kuji_class);
                     $(kuji_class).attr('src','./images/kuji_hazure.png');
                 }
             }
-            
-            // // 選んだ番号を表示_===だと動かない、choicesが文字だから
-            // if(choices==1){
-            //     $("#choices").text("1番")
-            // }else if(choices==2){
-            //     $("#choices").text("2番")
-            // }else if(choices==3){
-            //     $("#choices").text("3番")
-            // }else if(choices==4){
-            //     $("#choices").text("4番")
-            // }else{
-            //     $("#choices").text("5番")
-            // }
-
-            // // 当たりかハズレかを判断
-            // if(choices==Atari){
-            //     $("#result").text("当たり")
-            // }else{
-            //     $("#result").text("ハズレ")
-            // }
         });
         
         $("#reset").on("click",function(){
