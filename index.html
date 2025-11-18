@@ -9,8 +9,10 @@
 </head>
 <body>
     <main>
-        <img class="banner" src="./images/main.png" alt="メインバナー">
-
+        <p class="typingText"></p>
+        <div class="next_button">
+            <p class="next"></p>
+        </div>
         <div class="ready">
             <h2>準備</h2>
 
@@ -68,6 +70,41 @@
     </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- タイトル表示 -->
+    <script>
+        const typingText = document.querySelector('.typingText');
+        const text = 'だれでもいい男くん';
+        const typingText2 = document.querySelector('.next');
+        const text2 = 'つぎへ';
+        let index = 1;
+
+        setTimeout(typeText, 1000);
+
+        // 一文字ずつ表示する関数
+        function typeText() {
+        typingText.textContent = text.slice(0, index);
+        if (index < text.length) {
+            index++;
+            setTimeout(typeText, 300);
+        } else {
+            setTimeout(eraseText, 1500);
+        }
+        }
+
+        // ここから、タイプライトが終わったら次を表示させたい
+
+        function typeText() {
+        typingText2.textContent = text2.slice(0, index);
+        if (index < text2.length) {
+            index++;
+            setTimeout(typeText, 300);
+        } else {
+            setTimeout(eraseText, 1500);
+        }
+        }
+
+    </script>
 
     <script>
         // 定義
