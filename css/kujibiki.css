@@ -1,131 +1,281 @@
 body{
-    background-color: #FAF6E5;
-
+    height: 100%;
+    margin: 0;
+    background-color: #6AA94E;
 }
 
-main {
-    background-image: url(../images/darekayatteo.png);
+main{
+    position: absolute; /* 親要素のbodyを基準に配置 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
     max-width: 480px;
-    height: 100vh;
-    margin: 0 auto;
-    display: flex;
+    background-size: contain; 
+    background-repeat: no-repeat;    
+    background-position: center center;
+    display: block;
 }
 
-.typingText {
-    font-size: 65px;
+main::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/darekayatteo.png);
+    background-size: contain; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 1;
+    /* 内部のテキストやフォームの上に重ならないようにする */
+    z-index: -1; 
+}
+
+main.transparent-bg::before{
+    opacity: 0.1;
+}
+
+.typingText{
+    font-size: clamp(30px, 15vw, 63px);
     color: rgb(32, 31, 31);
     font-weight: 800;
     text-align: center;
     /* 縦文字 */
     writing-mode: vertical-rl; 
-    padding-top: 140px;
-    margin-left: 20px;
+    position: absolute;
+    top: 20%;
+    left: 5%;    
+    padding: 0;
+    margin: 0;
 }
 
 .next{
-    font-size: 48px;
+    font-size:48px;
     color: rgb(32, 31, 31);
     font-weight: 800;
 }
 
-.next_button{
-    margin-top: 385px;
-    margin-left: 45px;
+#next_button{
+    position: absolute;
+    top: 54%;    
+    left: 62%; 
+    transform: translate(-50%, -50%); 
+    transition: opacity 0.3s; /* スムーズに変化させる */
 }
 
+/* クリック可能になったら、クラスを追加してスタイルを変える */
+.is-clickable{
+    cursor: pointer;
+    animation: flashing 1s ease-in-out infinite alternate;
+}
+
+/* フラッシュのアニメーション */
+@keyframes flashing{
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+/* kujibiki_ready.htmlの定義 */
 .ready{
-    margin-bottom: 50px;
-    display: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 h2{
-    color: #DA3B3C;
+    color: #406199;
     text-align: center;
-    margin: 20px 0px;
+    margin: 0px 0px;
+    padding-left: 5%;
+    background-color: #F9E16E;    
+    font-size: clamp(28px, 6vw, 40px);
+    font-weight: 900;
+    text-align: start;
+    text-shadow: 
+        /* 明るい黄色で文字の周りを縁取る */
+        1px 1px 0 #FFEE58, 
+        -1px -1px 0 #FFEE58,
+        1px -1px 0 #FFEE58,
+        -1px 1px 0 #FFEE58,
+        /* 文字の右下に濃い影 */
+        0 0 4px #201F1F;
 }
 
-section {
+/* 各ステップの設定 */
+.step1,.step2,.step3{
     margin-bottom: 20px;
-    /* height: calc(100vh/6); */
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.step4{
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    text-align: right;
 }
 
 .title{
-    font-size: 16px;
-    font-weight: 800;
-    /* color: #DA3B3C; */
-    color: #3D93B3;
-    line-height: 0px;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    padding-left: 25%;
+    font-size: clamp(20px, 4.5vw, 28px);
+    font-weight: 900;
+    color: #F9E16E; 
+    text-shadow: 
+        1px 1px 0 #201F1F,
+        -1px -1px 0 #201F1F,
+        0 0 3px #201F1F;
 }
 
 .ex{
-    font-size: 12px;
-    line-height: 0px;
+    width: 100%;
+    text-align: left;
+    padding-left: 30%;
+    font-size: 14px;
+    line-height: 1;
 }
 
-.settei {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* テーマ入力欄まとめ */
+.settei{
+    width: 100%;
+    text-align: left;
+    padding-left: 40%;
 }
 
+/* テーマ入力欄の設定 */
 #theme{
     width:180px;
-    height: 25px;
+    height: 40px;
     margin-top: 10px;
+    border: 3px solid #201F1F;
+    border-radius: 5px; 
+    display: inline-block;
 }
 
 .sub_text{
-    font-size: 14px;
+    font-size: 18px;
     margin-top: 20px;
     margin-left: 10px;
+    display: inline-block;
+    vertical-align: top;
 }
 
+.enter_participant,.enter_winner{
+    width: 100%;
+    padding-left: 40%;
+}
+
+/* オプションフレームの設定 */
 #participant,#winner{
-    width:180px;
-    height: 30px;
-    margin-top: 10px;
+    width:190px;
+    height: 50px;
+    margin-top: 20px;
+    padding-left: 10px;
+    font-size: 14px;
+    border: 3px solid #201F1F;
+    border-radius: 5px; 
 }
 
+/* 抽選するボタン */
+#next_kujibiki{
+    width: 40%;
+    height: 50px;
+    margin: 30px auto;
+    margin-right: 5%;
+    font-size: 18px;
+    font-weight: 900;
+    color: #CE5345;
+    background-color: #F9E16E;
+    border: 3px solid #201F1F;
+    border-radius: 5px; 
+    cursor: pointer;
+}
+
+/* kujibiki_result.htmlの定義 */
 .kujibiki{
-    display: none;
+    width: 100%;
 }
 
-.entername {
+section{
+    margin: 10px auto;
+    text-align: center;
+}
+
+/* くじ画像＋入力欄 を縦に並べる*/
+.entername{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#run,#reset{
-    width: 40%;
-    height: 30px;
-    margin: 20px 0px;
-    background-color: #3D93B3;
-    font-size: 14px;
-    color: #FAF6E5;
-    border: none;
-}
-
+/* くじ画像＋入力欄 */
 .row_choices{
-    width: 70%;
+    width: 100%;
     height: fit-content;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin: 10px 0px;
+    margin-left: -10%;
 }
 
+/* kuji画像サイズ調整 */
 #kuji{
-    width: 50%;
+    width: 40%;
 }
 
+/* 名前入力欄調整 */
 .name_ary{
-    width:150px;
-    height: 30px;
-    margin: 10px 0px;
+    width:160px;
+    height: 40px;
+    border: 3px solid #201F1F;
+    border-radius: 5px; 
+    text-align: center;
+    display: inline-block;
+}
+
+/* 結果表示 */
+#result{
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-size: clamp(14px, 4.5vw, 20px);
+    font-weight: 900;
+    color: #F9E16E; 
+    text-shadow: 
+        1px 1px 0 #CE5345,
+        -1px -1px 0 #CE5345,
+        0 0 3px #CE5345;
+}
+
+/* 抽選するとTOPに戻るのボタン調整 */
+#run,#reset{
+    width: 40%;
+    height: 50px;
+    margin: 30px auto;
+    margin-right: 5%;
+    font-size: 18px;
+    font-weight: 900;
+    color: #CE5345;
+    background-color: #F9E16E;
+    border: 3px solid #201F1F;
+    border-radius: 5px; 
+    cursor: pointer;
+}
+
+/* PR画像調整 */
+.pr{
+    width: 70%;
+    display: block;
+    margin: 0 auto;
 }

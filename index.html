@@ -10,197 +10,66 @@
 <body>
     <main>
         <p class="typingText"></p>
-        <div class="next_button">
+        <div id="next_button">
             <p class="next"></p>
         </div>
-        <div class="ready">
-            <h2>準備</h2>
-
-            <section>
-                <p class="title">Step1. テーマを入力</p>
-                <p class="ex">入力例）掃除当番、飲み会幹事</p>
-                <div class="settei">
-                    <input type="text" id="theme" val=""/>
-                    <p class="sub_text">を決める
-                    </p>
-                </div>
-            </section>
-
-            <section>
-                <p class="title">Step2. 参加人数を選択</p>
-                <select id="participant">
-                    <option value="" disabled selected>--選択してください--</option>
-                    <option value="2">2人</option>
-                    <option value="3">3人</option>
-                    <option value="4">4人</option>
-                    <option value="5">5人</option>
-                </select>
-            </section>
-
-            <section>
-                <p class="title">Step3. 当たる人数を選択</p>
-                <select id="winner">
-                    <option value="" disabled selected>--選択してください--</option>
-                </select>
-            </section>
-        </div>
-        
-        <div class="kujibiki">
-            <h2>くじ引き会場</h2>
-
-            <section>
-                <div class="entername">
-                </div>
-            </section>
-
-            <section>
-                <button id="run">抽選する</button>
-            </section>
-
-            <section>
-                <p>結果は？</p>
-                <p id="result"></p>
-            </section>
-
-            <section>
-                <button id="reset">もう1回やる</button>
-            </section>
-        </div>
-        
     </main>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- タイトル表示 -->
     <script>
-        const typingText = document.querySelector('.typingText');
-        const text = 'だれでもいい男くん';
+        const typingText1 = document.querySelector('.typingText');
+        const text1 = 'だれかやれ男くん';
         const typingText2 = document.querySelector('.next');
         const text2 = 'つぎへ';
-        let index = 1;
+        let index1 = 0;
+        let index2 = 0;
 
-        setTimeout(typeText, 1000);
+        $(document).ready(function() {
+        // HTML要素が確実にロードされた後で要素を取得する！
+            const nextButton = document.getElementById('next_button'); 
+            const nextUrl = "kujibiki_ready.html";
 
-        // 一文字ずつ表示する関数
-        function typeText() {
-        typingText.textContent = text.slice(0, index);
-        if (index < text.length) {
-            index++;
-            setTimeout(typeText, 300);
-        } else {
-            setTimeout(eraseText, 1500);
-        }
-        }
-
-        // ここから、タイプライトが終わったら次を表示させたい
-
-        function typeText() {
-        typingText2.textContent = text2.slice(0, index);
-        if (index < text2.length) {
-            index++;
-            setTimeout(typeText, 300);
-        } else {
-            setTimeout(eraseText, 1500);
-        }
-        }
-
-    </script>
-
-    <script>
-        // 定義
-        let theme=""
-        let participant = 0;
-        let maxParticipant = 0;
-        let maxAtari =0;
-        const name_ary=[];  //配列を定義
-        
-        // 入力欄に何か入力されたら発動
-        $("#theme").on('change',function(){ 
-            theme = $( this ).val();
-        });
-
-        // 参加人数の値を取得
-        $("#participant").on('change',function(){ 
-            participant = $( this ).val();
-            maxParticipant = parseInt(participant);
-
-            // 当たる人数の選択肢をリセット
-            $("#winner").empty();
-            $("#winner").append('<option value="" disabled selected>--選択してください--</option>');
-
-            // 当たる人数の上限値分の選択肢をhtml内に設定
-            for(let i=1; i<maxParticipant; i++){
-                $("#winner").append('<option value="'+i+'">'+i+'人</option>');
+            function navigateToNextPage() {
+                window.location.href = nextUrl; 
             }
 
-            // 選ぶ枠をリセット
-            $(".entername").empty();
+            typeText1(nextButton, navigateToNextPage);
 
-            // 当たる人数分の選ぶ枠をhtml内に設定、画像をランダムに表示
-            for(let i=1; i<=maxParticipant; i++){
-                const random_img = Math.floor(Math.random()*5) + 1;
-                $(".entername").append('<div class="row_choices"> <img src="./images/kuji'+random_img+'.png" id="kuji" class="kuji'+i+'" alt="くじ"> <input type="text" class="name_ary" placeholder="名前を入力してください" name="name" value=""> </div>');
-            }
-        });
+        // 一文字ずつ表示する関数1
+            function typeText1(button, navigateFn) {
+                typingText1.textContent = text1.slice(0, index1);
 
-        // 当選人数の値を取得
-        $("#winner").on('change',function(){ 
-        atari_num = $( this ).val();
-        maxAtari = parseInt(atari_num);
-        console.log("当たり人数"+maxAtari);
-        });
-
-        // 複数人の当選者を決めるランダム関数の定義
-        function random(array, num) {
-        var a = array;
-        var t = [];
-        var r = [];
-        var l = a.length;
-        var n = num < l ? num : l;
-        while (n-- > 0) {
-        var i = (Math.random() * l) | 0;
-        r[n] = t[i] || a[i];
-        --l;
-        t[i] = t[l] || a[l];
-        }
-        return r;
-        }    
-        
-        // 「抽選する」ボタンが押されたら発動
-        $("#run").on("click",function(){
-
-            // 配列に入力された値を入れる
-            let name_ary = $(".name_ary").serializeArray();
-            
-            // 事前に定義したrandom関数で当たり配列を作る
-            let winner_list = random(name_ary, maxAtari);
- 
-            // 当選者の名前を抽出して、整形された文字列を作成する
-            let winner_names = winner_list.map(function(item) {
-                return item.value;
-            });
-
-            // 結果を表示
-            $("#result").text(winner_names.join("、") + "さん" + theme + "よろしくお願いします！");
-                
-            // あたりハズレに応じて画像を変換表示
-            for(let i=0; i<name_ary.length; i++){
-                const participant_name = name_ary[i].value;
-                const Atari_num = i+1;
-                const kuji_class = ".kuji"+ Atari_num;
-
-                if(winner_names.includes(participant_name)){                    
-                    $(kuji_class).attr('src','./images/kuji_atari.png');
-                }else{
-                    $(kuji_class).attr('src','./images/kuji_hazure.png');
+                if (index1 < text1.length) {
+                    index1++;
+                    setTimeout(() => typeText1(button, navigateFn), 300);
+                } else {
+                    // typeText1が終わったらtypeText2を1秒後に開始
+                    setTimeout(() => typeText2(button, navigateFn), 1000);
                 }
+
+            }      
+        
+        // 一文字ずつ表示する関数2
+            function typeText2(button, navigateFn) {
+                typingText2.textContent = text2.slice(0, index2);  
+
+                if (index2 < text2.length) {
+                    index2++;
+                    setTimeout(() => typeText2(button, navigateFn), 300);
+                } else {
+                    // タイプライト完了後、0.5秒待ってからクリックイベントを設定
+                    setTimeout(function() {
+                    // クリックイベントを追加 (ボタンが押されたらページ遷移)
+                    $(button).on('click', navigateFn);
+                    // ユーザーにクリック可能になったことを示すため、CSSを変更
+                    button.classList.add('is-clickable');
+                    }, 500);
+                }
+
             }
         });
-        
-        $("#reset").on("click",function(){
-            location.reload();
-        });
-
     </script>
 </body>
 </html>
